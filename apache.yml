@@ -4,15 +4,27 @@
     yum:
       name: httpd
       state: latest
-  - name: Start Apache Service
-    service:
-      name: httpd
+  - name: Make sure a service is running
+    systemd:
       state: started
-  - name: Copy Index File to Apache Directory
+      enabled: yes
+      name: httpd
+
+  - name: Install Unzip
+    yum:
+      name: unzip
+      state: latest
+  - name: Unarchive a file that needs to be downloaded 
+    unarchive:
+      src: https://www.free-css.com/assets/files/free-css-templates/download/page286/creative-studio.zip
+      dest: /tmp/
+      remote_src: yes
+  - name: Copy files to /var/www/html
     copy:
-      src: /tmp/index.html
+      src: /tmp/
       dest: /var/www/html/
-  - name: Restart Apache Service
+      remote_src: yes
+  - name: Restart Apache
     service:
       name: httpd
-      state: restarted  
+      state: restarted
