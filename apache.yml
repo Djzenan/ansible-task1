@@ -21,7 +21,7 @@
       remote_src: yes
   - name: Copy files to /var/www/html
     copy:
-      src: /tmp/
+      src: /tmp/creative-studio/public_html/
       dest: /var/www/html/
       remote_src: yes
   - name: Restart Apache
